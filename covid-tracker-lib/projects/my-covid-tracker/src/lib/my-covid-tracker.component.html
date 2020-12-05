@@ -1,0 +1,17 @@
+<div class="covid_tracker">
+    <select (change)="getCasesAccordingToCountries($event)">
+        <option>Select Country</option>
+        <option *ngFor="let item of (contriesList$ | async)" [value]="item?.Slug">{{ item?.Country }}</option>
+    </select>
+    <div *ngIf="getAllStatus$|async as countryStatus;" class="display_status">
+        <ng-container *ngIf="!!countryStatus; else noItems">
+            Active:
+            <div>{{countryStatus?.Active}} | </div>
+            Confirmed:
+            <div>{{countryStatus?.Confirmed}} | </div>
+            Recvovered:
+            <div>{{countryStatus?.Recovered}}</div>
+        </ng-container>
+        <ng-template #noItems>No Data Found</ng-template>
+    </div>
+</div>

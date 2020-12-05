@@ -1,0 +1,164 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "my-covid-tracker": {
+      "projectType": "library",
+      "root": "projects/my-covid-tracker",
+      "sourceRoot": "projects/my-covid-tracker/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/my-covid-tracker/tsconfig.lib.json",
+            "project": "projects/my-covid-tracker/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/my-covid-tracker/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/my-covid-tracker/src/test.ts",
+            "tsConfig": "projects/my-covid-tracker/tsconfig.spec.json",
+            "karmaConfig": "projects/my-covid-tracker/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/my-covid-tracker/tsconfig.lib.json",
+              "projects/my-covid-tracker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "covid-tracker-application": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/covid-tracker-application",
+      "sourceRoot": "projects/covid-tracker-application/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/covid-tracker-application",
+            "index": "projects/covid-tracker-application/src/index.html",
+            "main": "projects/covid-tracker-application/src/main.ts",
+            "polyfills": "projects/covid-tracker-application/src/polyfills.ts",
+            "tsConfig": "projects/covid-tracker-application/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/covid-tracker-application/src/favicon.ico",
+              "projects/covid-tracker-application/src/assets"
+            ],
+            "styles": [
+              "projects/covid-tracker-application/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/covid-tracker-application/src/environments/environment.ts",
+                  "with": "projects/covid-tracker-application/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "covid-tracker-application:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "covid-tracker-application:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "covid-tracker-application:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/covid-tracker-application/src/test.ts",
+            "polyfills": "projects/covid-tracker-application/src/polyfills.ts",
+            "tsConfig": "projects/covid-tracker-application/tsconfig.spec.json",
+            "karmaConfig": "projects/covid-tracker-application/karma.conf.js",
+            "assets": [
+              "projects/covid-tracker-application/src/favicon.ico",
+              "projects/covid-tracker-application/src/assets"
+            ],
+            "styles": [
+              "projects/covid-tracker-application/src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/covid-tracker-application/tsconfig.app.json",
+              "projects/covid-tracker-application/tsconfig.spec.json",
+              "projects/covid-tracker-application/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/covid-tracker-application/e2e/protractor.conf.js",
+            "devServerTarget": "covid-tracker-application:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "covid-tracker-application:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "my-covid-tracker"
+}
